@@ -4,7 +4,7 @@
   
 このページでは、[WAGRI](https://wagri.naro.go.jp/) 運営事務局が提供している農地APIの「[農地ピン情報取得API：SearchByCityCode](https://wagri.naro.go.jp/wagri_api/agriculturalland-searchbycitycode/)」を利用したデータの取得、フィーチャクラスへの変換、フィールド エイリアス名の設定を行う、ArcGIS Pro 用のサンプルの [Python ツールボックス](https://pro.arcgis.com/ja/pro-app/latest/arcpy/geoprocessing_and_python/a-quick-tour-of-python-toolboxes.htm) を公開しています。  
 
-[ファイル一式](https://github.com/EsriJapan/agricultural-land-tools/blob/main/agricultural-land-tools.zip) を入手し、ArcGIS Pro へ本ツールボックス を追加することで、ジオプロセシング ツールとして次の処理を行うことが可能です。  
+[ファイル一式](https://github.com/EsriJapan/agricultural-land-tools/releases/download/v1.0.0/agricultural-land-tools.zip) を入手し、ArcGIS Pro へ本ツールボックス を追加することで、ジオプロセシング ツールとして次の処理を行うことが可能です。  
   
 **[WAGRI 農地ピン 処理用ツールボックス]** : [WAGRI_AgriLandPin_toolbox.pyt](https://github.com/EsriJapan/agricultural-land-tools/blob/main/WAGRI_AgriLandPin_toolbox.pyt )  
 
