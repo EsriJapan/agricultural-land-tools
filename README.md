@@ -10,13 +10,13 @@
 
 ![AgriLandPin-toolbox](./image/agrilandpin-toolbox.png)
 
-* **[01_農地ピン-GeoJson を WAGRI API で取得ツール]**
-WAGRI運営事務局が提供している農地APIの「[農地ピン情報取得API：SearchByCityCode](https://wagri.naro.go.jp/wagri_api/agriculturalland-searchbycitycode/)」を利用して、指定した市区町村の農地ピン情報をGeojson 形式のファイルとしてダウンロードするツールです。  
+* **[01_農地ピン-GeoJSON を WAGRI API で取得ツール]**
+WAGRI運営事務局が提供している農地APIの「[農地ピン情報取得API：SearchByCityCode](https://wagri.naro.go.jp/wagri_api/agriculturalland-searchbycitycode/)」を利用して、指定した市区町村の農地ピン情報をGeoJSON 形式のファイルとしてダウンロードするツールです。  
 ※1: 本ツールを利用するには、予め、WAGRIの「データ利用・提供会員」のプランに加入し、**[conf]** フォルダー下の **wagri_config.ini** ファイルに `id` `secret` を設定して頂く必要があります。WAGRIの「データ利用・提供会員」のプランの詳細は、[WAGRIの利用料金](https://wagri.naro.go.jp/about_wagri/fee/) や [利用申請](https://wagri.naro.go.jp/about_wagri/terms/) をご参照ください。
 ※2: 本ツールで一覧に出てくる市区町村は、**[conf]** フォルダー下の **city_code.csv** ファイルでカスタマイズ可能です。カスタマイズする場合は、csvファイルのヘッダー情報（code,name）はそのまま残し、2行目以降を書き換えてご利用ください。なお、code の値は 5桁 で定義する必要がありますのでご注意ください。  
 
-* **[02_農地ピン-GeoJson → フィーチャ 変換ツール]**
-農地ピンの Geojson 形式のファイルを ArcGIS のフィーチャクラス に変換するツールで、複数の Geojson 形式のファイルを指定可能です。  
+* **[02_農地ピン-GeoJSON → フィーチャ 変換ツール]**
+農地ピンの GeoJSON 形式のファイルを ArcGIS のフィーチャクラス に変換するツールで、複数の GeoJSON 形式のファイルを指定可能です。  
 
 * **[03_農地ピン-フィーチャクラスにフィールド エイリアス名 設定ツール]**
 農地ピンのフィーチャクラスに、フィールド エイリアス名を設定するツールで、複数のフィーチャクラスを指定可能です。  

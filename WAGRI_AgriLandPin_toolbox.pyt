@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
 Name        : WAGRI_AgriLandPin_toolbox.pyt
-Purpose     : WAGRI API SearchByCityCode で農地ピンをGeoJson としての取得、フィーチャクラスへの変換、
+Purpose     : WAGRI API SearchByCityCode で農地ピンをGeoJSON としての取得、フィーチャクラスへの変換、
               フィーチャクラスにフィールド エイリアスを設定する3つのジオプロセシング ツールが入った Python toolbox です。
 Author      :
 Copyright   :
@@ -157,7 +157,7 @@ class WagriAPISearchByCityCode():
     # public：def func():
     def get_agriculturalland_geojson(self, city_code, file_name, is_async = True):
         """
-        SearchByCityCode で農地ピンをGeoJsonで取得
+        SearchByCityCode で農地ピンをGeoJSONで取得
         """
         # tokenを取得
         token_json = self.__get_token(self.client_id, self.client_secret)
@@ -188,7 +188,7 @@ class WagriAPISearchByCityCode():
 # 
 # 2023年8月現在JSONToFeatures を使って変換した時に PointZ のジオメトリになってしまうようなので、それを回避するArcPy を使った自前の変換クラス
 # 
-# - GistにあったGeojson からFeatureClass へArcPyで変換する方法を参考にしながら実装
+# - GistにあったGeoJSON からFeatureClass へArcPyで変換する方法を参考にしながら実装
 #   https://gist.github.com/d-wasserman/070ec800584d18a22e1b5a636ca183b7
 # 
 class GeojsonToFeaturesEx():
@@ -337,8 +337,8 @@ class Toolbox(object):
 class Wagri_GetAgriLandPin(object):
     def __init__(self):
         """ツールを定義する（ツール名はクラス名）。"""
-        self.label = "01_農地ピン-GeoJson を WAGRI API で取得ツール"
-        self.description = "WAGRI の農地ピン情報取得API：SearchByCityCodeAPI を使って、指定した自治体の農地ピンを GeoJson 形式のファイルとして取得するツールです"
+        self.label = "01_農地ピン-GeoJSON を WAGRI API で取得ツール"
+        self.description = "WAGRI の農地ピン情報取得API：SearchByCityCodeAPI を使って、指定した自治体の農地ピンを GeoJSON 形式のファイルとして取得するツールです"
         self.canRunInBackground = False
 
     def __get_city_csv_file(self):
@@ -350,7 +350,7 @@ class Wagri_GetAgriLandPin(object):
     def getParameterInfo(self):
         """ツールの実行に必要なパラメーターの設定"""
         #param0 市区町村の選択 (複数選択可)
-        #param1 GeoJson を出力するフォルダー
+        #param1 GeoJSON を出力するフォルダー
 
         param0 = arcpy.Parameter(
             displayName="農地ピンを取得する市区町村の選択 (複数選択可)",
@@ -374,7 +374,7 @@ class Wagri_GetAgriLandPin(object):
         param0.filter.list = param_list
         
         param1 = arcpy.Parameter(
-            displayName="農地ピンGeoJson を出力するフォルダー",
+            displayName="農地ピンGeoJSON を出力するフォルダー",
             name="folder",
             datatype="DEFolder",
             parameterType="Required",
@@ -431,16 +431,16 @@ class Wagri_GetAgriLandPin(object):
 class GeoJsonToFc(object):
     def __init__(self):
         """ツールを定義する（ツール名はクラス名）。"""
-        self.label = "02_農地ピン-GeoJson → フィーチャ 変換ツール"
-        self.description = "農地ピンの GeoJson をフィーチャクラスに変換するツールです"
+        self.label = "02_農地ピン-GeoJSON → フィーチャ 変換ツール"
+        self.description = "農地ピンの GeoJSON をフィーチャクラスに変換するツールです"
         self.canRunInBackground = False
 
     def getParameterInfo(self):
         """ツールの実行に必要なパラメーターの設定"""
-        #param0 GeoJson の選択 (複数選択可)
+        #param0 GeoJSON の選択 (複数選択可)
         #param1 Out workspace (File Geodatabase)
         param0 = arcpy.Parameter(
-            displayName="農地ピンGeoJson の選択 (複数選択可)",
+            displayName="農地ピンGeoJSON の選択 (複数選択可)",
             name="geojson",
             datatype="DEFile",
             parameterType="Required",
@@ -479,7 +479,7 @@ class GeoJsonToFc(object):
         # ArcGIS で複数値を入力すると ";" で区切られるため、スプリットしてリスト化
         geojson_file_list = geojson_file_raw.split(';') 
 
-        #入力された geojson ファイルからフィーチャ クラスに変換
+        #入力された GeoJSON ファイルからフィーチャ クラスに変換
         convGeojson = GeojsonToFeaturesEx()
         for geojson_file in geojson_file_list:
             try:
