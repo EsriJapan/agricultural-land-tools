@@ -13,7 +13,8 @@
 * **[01_農地ピン-GeoJSON を WAGRI API で取得ツール]**
 WAGRI運営事務局が提供している農地APIの「[農地ピン情報取得API：SearchByCityCode](https://wagri.naro.go.jp/wagri_api/agriculturalland-searchbycitycode/)」を利用して、指定した市区町村の農地ピン情報をGeoJSON 形式のファイルとしてダウンロードするツールです。  
 ※1: 本ツールを利用するには、予め、WAGRIの「データ利用・提供会員」のプランに加入し、**[conf]** フォルダー下の **wagri_config.ini** ファイルに `id` `secret` を設定して頂く必要があります。WAGRIの「データ利用・提供会員」のプランの詳細は、[WAGRIの利用料金](https://wagri.naro.go.jp/about_wagri/fee/) や [利用申請](https://wagri.naro.go.jp/about_wagri/terms/) をご参照ください。
-※2: 本ツールで一覧に出てくる市区町村は、**[conf]** フォルダー下の **city_code.csv** ファイルでカスタマイズ可能です。カスタマイズする場合は、csvファイルのヘッダー情報（code,name）はそのまま残し、2行目以降を書き換えてご利用ください。なお、code の値は 5桁 で定義する必要がありますのでご注意ください。  
+※2: 本ツールで一覧に出てくる市区町村は、**[conf]** フォルダー下の **city_code.csv** ファイルでカスタマイズ可能です。カスタマイズする場合は、csvファイルのヘッダー情報（code,name）はそのまま残し、2行目以降を書き換えてご利用ください。なお、code の値はGISでよく使う [統計に用いる標準地域コード](https://www.soumu.go.jp/toukei_toukatsu/index/seido/9-5.htm) と同様に 5桁で定義する必要があります。ツールの内部で 6桁目の検査数字を付加し 6桁コードに変換後、SearchByCityCode のAPIを利用しています。  
+また、[統計に用いる標準地域コード](https://www.soumu.go.jp/toukei_toukatsu/index/seido/9-5.htm) で公開されている全国CSVから、**city_code.csv** を作成する[サンプルノートブック](./notebook/標準地域コードのCSV加工ノートブック.ipynb) も追加しました。  
 
 * **[02_農地ピン-GeoJSON → フィーチャ 変換ツール]**
 農地ピンの GeoJSON 形式のファイルを ArcGIS のフィーチャクラス に変換するツールで、複数の GeoJSON 形式のファイルを指定可能です。  
