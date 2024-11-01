@@ -6,7 +6,7 @@ Purpose     : WAGRI API SearchByCityCode で農地ピンをGeoJSON としての�
 Author      :
 Copyright   :
 Created     :2023/08/24
-Last Updated:
+Last Updated:2024/11/01
 ArcGIS Version: ArcGIS Pro 2.9 以上
 """
 import arcpy
@@ -207,7 +207,9 @@ class GeojsonToFeaturesEx():
             chardic = chardet.detect(b)
             with open(jsonfile, 'r', encoding=chardic['encoding']) as fp:
                 gjson_data = json.loads(fp.read())
-        
+        #農地ピンデータがない場合'title': 'Queryの結果データがありませんでした。', 'status': 404,
+        if gjson_data.get("status") == 404:
+            return []
         records = []
         for feature in gjson_data["features"]:
             try:
@@ -233,16 +235,23 @@ class GeojsonToFeaturesEx():
             arcpy.AddMessage(u"{0} への 変換を開始します".format(name))
             arcpy.AddMessage(u"    GeoJSON のレコード読込み中...")
             records = self.__write_geojson_to_records(jsonfile)
+            if len(records) == 0:
+                arcpy.AddWarning(u"農地ピンが 0件 のため変換処理を終了します");
+                return True
 
             type = records[0]["type"]
             arctype = None
+            # GeoJSON Geometry : Point, MultiPoint, LineString, MultiLineString, Polygon, MultiPolygon
+            # https://docs.ogc.org/is/17-003r2/17-003r2.html#38
             if type == "FeatureCollection":
                 arcpy.AddWarning(u"FeatureCollections は、 point,line, polygon のいずれかに分解されます")
                 arctype = "POINT" 
-            elif type == "LineString":
+            elif (type == "LineString") or (type == "MultiLineString"):
                 arctype = "POLYLINE" 
+            elif (type == "MultiPolygon"):
+                arctype = "POLYGON"
             else:
-                arctype = str(type).upper()
+                arctype = str(type).upper() # POINT, POLYGON
             arcpy.AddMessage(u"    フィーチャクラス の新規作成...")
             arcpy.CreateFeatureclass_management(path, name, arctype, spatial_reference=projection)
             
@@ -365,7 +374,7 @@ class Wagri_GetAgriLandPin(object):
         csv = self.__get_city_csv_file()
         df = pd.read_csv(csv, header=0)
         #パラメーター用の列を用意して、<市区町村コード>_<市区町村名>を格納
-        df['param'] = df['code'].astype(str) + "_" + df['name']
+        df['param'] = df['code'].astype(str).str.zfill(5) + "_" + df['name']
         # modulus11 実行時に空白があるとエラーになるので、空白を削除する
         df['param'] = df['param'].str.replace(' ', '')
         df['param'] = df['param'].str.replace('　', '')
