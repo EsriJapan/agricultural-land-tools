@@ -239,19 +239,19 @@ class GeojsonToFeaturesEx():
                 arcpy.AddWarning(u"農地ピンが 0件 のため変換処理を終了します");
                 return True
 
-            type = records[0]["type"]
+            gtype = records[0]["type"]
             arctype = None
             # GeoJSON Geometry : Point, MultiPoint, LineString, MultiLineString, Polygon, MultiPolygon
             # https://docs.ogc.org/is/17-003r2/17-003r2.html#38
-            if type == "FeatureCollection":
+            if gtype == "FeatureCollection":
                 arcpy.AddWarning(u"FeatureCollections は、 point,line, polygon のいずれかに分解されます")
                 arctype = "POINT" 
-            elif (type == "LineString") or (type == "MultiLineString"):
+            elif (gtype == "LineString") or (gtype == "MultiLineString"):
                 arctype = "POLYLINE" 
-            elif (type == "MultiPolygon"):
+            elif (gtype == "MultiPolygon"):
                 arctype = "POLYGON"
             else:
-                arctype = str(type).upper() # POINT, POLYGON
+                arctype = str(gtype).upper() # POINT, POLYGON
             arcpy.AddMessage(u"    フィーチャクラス の新規作成...")
             arcpy.CreateFeatureclass_management(path, name, arctype, spatial_reference=projection)
             
